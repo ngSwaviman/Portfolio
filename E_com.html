@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> NG Tech Sites | E-commerce Startup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles & Blue Variant Variables */
+        :root {
+            --primary-color: #33A1FF; /* Bright, modern blue */
+            --secondary-color: #8E44AD; /* Deep violet for gradients */
+            --dark-color: #0d1117;     /* Very dark navy blue */
+            --light-color: #f8f9fa;
+            --text-color: #e6e6e6;
+            --glass-bg: rgba(20, 30, 60, 0.6); /* Blue-tinted glass */
+            --success-color: #28a745;  /* A complementary green */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--text-color);
+            background-image: radial-gradient(circle at 1% 1%, rgba(51, 161, 255, 0.15) 0%, transparent 25%),
+                              radial-gradient(circle at 99% 99%, rgba(142, 68, 173, 0.15) 0%, transparent 25%);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary-color);
+        }
+
+        /* Header & Navigation */
+        .header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light-color);
+            text-decoration: none;
+        }
+        .logo span { color: var(--primary-color); }
+
+        .search-bar {
+            display: flex;
+            width: 40%;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px 0 0 20px;
+            background: var(--glass-bg);
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        .search-bar input:focus {
+            border-color: var(--primary-color);
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 0 20px 20px 0;
+            background: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+        .user-actions a {
+            color: var(--light-color);
+            font-size: 1.5rem;
+            position: relative;
+        }
+        #cart-count {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+            border: 2px solid var(--dark-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: url('https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1926&auto=format&fit=crop') no-repeat center center/cover;
+            background-attachment: fixed;
+            position: relative;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(13, 17, 23, 0.7);
+        }
+        .hero-content { z-index: 10; }
+        .hero h1 { font-size: 4rem; margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; margin-bottom: 20px; color: #ccc; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        .btn:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); }
+
+        /* Categories Section */
+        .categories-section { padding: 80px 0; }
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+        .category-card {
+            background: var(--glass-bg);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .category-card:hover {
+            transform: translateY(-10px);
+            background: rgba(30, 45, 90, 0.9);
+            border-color: var(--primary-color);
+        }
+        .category-card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        /* Products Section */
+        .products-section { padding: 80px 0; background: rgba(0,0,0,0.2); }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* Single Product Card Styling */
+        .product-card {
+            background: var(--glass-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); }
+        .product-image {
+            height: 250px;
+            overflow: hidden;
+        }
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .product-card:hover .product-image img { transform: scale(1.1); }
+        .product-info {
+            padding: 20px;
+        }
+        .product-info h4 { font-size: 1.2rem; margin-bottom: 5px; }
+        .product-category {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        .add-to-cart-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .add-to-cart-btn:hover { background: #0056b3; }
+        .add-to-cart-btn.added {
+            background-color: var(--success-color);
+            color: white;
+            cursor: not-allowed;
+        }
+        .add-to-cart-btn .fa-check { display: none; }
+        .add-to-cart-btn.added .fa-shopping-cart { display: none; }
+        .add-to-cart-btn.added .fa-check { display: inline-block; }
+
+        /* Footer */
+        .footer {
+            background: #0a0a0a;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .footer p { color: #888; }
+        .portfolio-btn {
+            position: fixed; /* Keeps the button in place while scrolling */
+            bottom: 30px;    /* 30px from the bottom */
+            right: 30px;     /* 30px from the right */
+            z-index: 1001;   /* Ensures it's above other content */
+            
+            background: linear-gradient(45deg, #ca8e63, #72bbc5); /* Rich green color */
+            color: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between icon and text */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            
+            /* Apply the RGB lightning animation */
+            animation: rgb-lightning 4s linear infinite;
+        }
+
+        .portfolio-btn:hover {
+            transform: scale(1.05); /* Slightly enlarges on hover */
+        }
+
+        /* 2. Keyframes for the RGB lightning animation */
+        @keyframes rgb-lightning {
+            0% {
+                box-shadow: 0 0 5px #ff2e63, 0 0 10px #ff2e63;
+            }
+            25% {
+                box-shadow: 0 0 5px #33A1FF, 0 0 10px #33A1FF;
+            }
+            50% {
+                box-shadow: 0 0 5px #8E44AD, 0 0 10px #8E44AD;
+            }
+            75% {
+                box-shadow: 0 0 5px #00e6cc, 0 0 10px #00e6cc;
+            }
+            100% {
+                box-shadow: 0 0 5px #ff2e63, 0 0 10px #ff2e63;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar container">
+            <a href="#" class="logo">NG <span>Shoping Cart</span></a>
+            <div class="search-bar">
+                <input type="text" placeholder="Search for products, brands and more">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="user-actions">
+                <a href="#"><i class="fas fa-user-circle"></i></a>
+                <a href="#">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>E-Commerce Demo</h1>
+                <p>Explore the future of technology, curated for you.</p>
+                <a href="#products" class="btn">Shop Now</a>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories-section" id="categories">
+            <div class="container">
+                <h2>Shop by Category</h2>
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Smartphones</h3>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-laptop"></i>
+                        <h3>Laptops</h3>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-headphones"></i>
+                        <h3>Audio</h3>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-camera"></i>
+                        <h3>Cameras</h3>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-gamepad"></i>
+                        <h3>Gaming</h3>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-tv"></i>
+                        <h3>Televisions</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products Section -->
+        <section class="products-section" id="products">
+            <div class="container">
+                <h2>Featured Products</h2>
+                <div class="product-grid">
+                    <!-- Product Card 1 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1780&auto=format&fit=crop" alt="Smartphone">
+                        </div>
+                        <div class="product-info">
+                            <h4>Aura Phone X</h4>
+                            <p class="product-category">Smartphones</p>
+                            <div class="product-footer">
+                                <span class="product-price">$999</span>
+                                <button class="add-to-cart-btn">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <i class="fas fa-check"></i>
+                                    <span>Add to Cart</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product Card 2 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?q=80&w=1964&auto=format&fit=crop" alt="Laptop">
+                        </div>
+                        <div class="product-info">
+                            <h4>NebulaBook Pro</h4>
+                            <p class="product-category">Laptops</p>
+                            <div class="product-footer">
+                                <span class="product-price">$1499</span>
+                                <button class="add-to-cart-btn">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <i class="fas fa-check"></i>
+                                    <span>Add to Cart</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product Card 3 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=2070&auto=format&fit=crop" alt="Headphones">
+                        </div>
+                        <div class="product-info">
+                            <h4>SonicWave Buds</h4>
+                            <p class="product-category">Audio</p>
+                            <div class="product-footer">
+                                <span class="product-price">$199</span>
+                                <button class="add-to-cart-btn">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <i class="fas fa-check"></i>
+                                    <span>Add to Cart</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product Card 4 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=2068&auto=format&fit=crop" alt="Gaming PC">
+                        </div>
+                        <div class="product-info">
+                            <h4>Vortex Gaming Rig</h4>
+                            <p class="product-category">Gaming</p>
+                            <div class="product-footer">
+                                <span class="product-price">$2499</span>
+                                <button class="add-to-cart-btn">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <i class="fas fa-check"></i>
+                                    <span>Add to Cart</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 AuraTech. All rights reserved.</p>
+        </div>
+    </footer>
+       <a href="index.html" target="_blank" class="portfolio-btn">
+        <i class="fas fa-user-tie"></i> Go to Portfolio
+    </a>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+            const cartCountElement = document.getElementById('cart-count');
+            let cartItemCount = 0;
+
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    if (button.classList.contains('added')) {
+                        return;
+                    }
+
+                    cartItemCount++;
+                    cartCountElement.innerText = cartItemCount;
+                    cartCountElement.style.transform = 'scale(1.3)';
+
+                    button.classList.add('added');
+                    const buttonText = button.querySelector('span');
+                    buttonText.innerText = 'Added!';
+
+                    setTimeout(() => {
+                        cartCountElement.style.transform = 'scale(1)';
+                    }, 300);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

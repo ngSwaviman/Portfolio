@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swaviman Gharai | Computer Science Engineer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #00e6cc;
+            --secondary-color: #ff2e63;
+            --dark-color: #0d0d0d;
+            --light-color: #f8f9fa;
+            --text-color: #e6e6e6;
+            --transition: all 0.4s ease;
+            --glass-bg: rgba(15, 15, 15, 0.7);
+            --glass-nav: rgba(20, 20, 20, 0.85);
+            --glow-color: rgba(0, 230, 204, 0.5);
+        }
+        .rgb-text-animation {
+            background: linear-gradient(to right, #66ff66, #33ccff, #ff66ff, #ffcc33, #66ff66);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: rgb-flow 5s linear infinite;
+        }
+
+        @keyframes rgb-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 2. Style for the Golden Waving Hand */
+        #waving-hand {
+            display: inline-block; /* Allows the hand to be transformed */
+            color: #FFD700; /* A nice golden color */
+            text-shadow: 0 0 5px #ffc107, 0 0 10px #ff8f00; /* Golden glow */
+            animation: wave-animation 2.5s infinite;
+            transform-origin: 70% 70%; /* Sets the pivot point for the wave */
+        }
+        
+        @keyframes wave-animation {
+            0% { transform: rotate(0deg); }
+            10% { transform: rotate(14deg); }
+            20% { transform: rotate(-8deg); }
+            30% { transform: rotate(14deg); }
+            40% { transform: rotate(-4deg); }
+            50% { transform: rotate(10deg); }
+            60% { transform: rotate(0deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--dark-color); /* Solid dark background for content */
+            overflow-x: hidden;
+        }
+
+        /* --- NEW: Dedicated Animated Background Layer --- */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2; /* Behind everything */
+            background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+            background-size: 400% 400%;
+            animation: darkVibrantAnimation 20s ease infinite;
+        }
+
+        @keyframes darkVibrantAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        /* --- End of Background Changes --- */
+
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        
+
+        .section {
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 36px;
+            color: var(--primary-color);
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+        .name{
+           color: #8699a2;
+             margin-left: 5px; 
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; 
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: var(--glass-nav);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--light-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--primary-color);
+            margin-left: 5px;
+        }
+
+        .logo-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        /* --- UPDATED: Navigation Link Styling for Fluid & Glow Effect --- */
+        .nav-links a {
+            font-weight: 600;
+            font-size: 23px;
+            transition: all 0.4s ease; /* Smooth transition for all properties */
+            padding: 8px 20px;
+            border-radius: 30px; /* Rounded pill shape */
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+            background-color: #47aaaf;
+            color: var(--text-color);
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 0%;
+            background: var(--primary-color);
+            z-index: -1;
+            transition: var(--transition);
+            opacity: 0;
+        }
+
+        /* This is the new active/hover state */
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: rgb(255, 255, 255);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--primary-color), 0 0 25px rgba(255, 46, 99, 0.4); /* Glow effect */
+        }
+        
+        .nav-links a:hover::before, 
+        .nav-links a.active::before {
+            background: linear-gradient(to right, var(--primary-color), var(--secodary-color));
+            opacity: 0.9; /* Glass effect */
+        }
+        /* --- End of Navigation Link Styling --- */
+
+
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--light-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 225px;
+            padding-bottom: 180px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .hero-text {
+            flex: 1;
+            padding-right: 30px;
+            animation: fadeInLeft 1s ease;
+        }
+
+        .hero-text h1 {
+            font-size: 43px;
+            margin-bottom: 20px;
+            color: var(--light-color);
+            line-height: 1.2;
+            
+        }
+
+        
+
+        .hero-text p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            color: #aaa;
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            animation: fadeInRight 1s ease;
+        }
+
+        .profile-image {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            border: 5px solid var(--primary-color);
+            box-shadow: 0 0 30px var(--glow-color);
+            overflow: hidden;
+            position: relative;
+            margin: 0 auto;
+            background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 20px;
+            transition: var(--transition);
+        }
+
+        .profile-image:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 40px var(--glow-color);
+        }
+
+        /* Other sections remain largely the same */
+        .about-content, .skills-container, .projects-grid, .contact-content {
+           /* styles from before */
+        }
+        
+        /* ... [All the rest of your unchanged CSS for sections like About, Skills, Projects, Contact, Footer, Animations, and Responsive Design goes here. It is omitted for brevity but should be kept in your file.] ... */
+           /* About Section */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-image {
+            flex: 1;
+            animation: fadeInLeft 1s ease;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-text {
+            flex: 1;
+            animation: fadeInRight 1s ease;
+        }
+
+        .about-text h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--light-color);
+        }
+
+        .about-text p {
+            margin-bottom: 15px;
+            color: #aaa;
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: flex;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .skill {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .skill:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .skill-circle {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            margin: 0 auto 20px;
+        }
+
+        .outer-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            padding: 20px;
+            background: conic-gradient(var(--primary-color) var(--progress), transparent 0);
+            box-shadow: 0 0 20px rgba(0, 230, 204, 0.3);
+        }
+
+        .inner-circle {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: var(--dark-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        .liquid-fill {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .liquid-wave, .liquid-wave1, .liquid-wave2, .liquid-wave3, .liquid-wave4, .liquid-wave5, .liquid-wave6, .liquid-wave7, .liquid-wave8, .liquid-wave9 {
+            position: absolute;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--primary-color);
+            border-radius: 40%;
+            animation: wave 5s linear infinite;
+            opacity: 0.6;
+        }
+
+        .liquid-wave { top: 25%; }
+        .liquid-wave1 { top: 32%; }
+        .liquid-wave2 { top: 20%; }
+        .liquid-wave3 { top: 35%; }
+        .liquid-wave4 { top: 60%; }
+        .liquid-wave5 { top: 48%; }
+        .liquid-wave6 { top: 28%; }
+        .liquid-wave7 { top: 17%; }
+        .liquid-wave8 { top: 21%; }
+        .liquid-wave9 { top: 41%; }
+
+        .skill h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--light-color);
+        }
+
+        /* Projects Section */
+        .projects {
+            background: rgba(10, 10, 10, 0.7);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(16, 3, 3, 0.3);
+        }
+
+        .project-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+
+        .project-info {
+            padding: 20px;
+        }
+
+        .project-info h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--light-color);
+        }
+
+        .project-info p {
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .project-tag {
+            background: rgba(0, 230, 204, 0.2);
+            color: var(--primary-color);
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+        btn:hover::before {
+            opacity: 1;
+        }
+
+        /*/ --- SEND MESSAGE SECTION --- */
+
+        /* 1. This is the animation for the green pulse effect */
+        @keyframes green-pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 10px 25px rgba(76, 175, 80, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(49, 137, 52, 0);
+            }
+        }
+
+        /* 2. This class will be added to the button after clicking */
+        .btn.success {
+            background: #4CAF50; /* Solid green background */
+            cursor: default; /* Change cursor since it's not clickable */
+            animation: green-pulse 0.3s ease-out; /* Apply the pulse animation */
+        }
+        
+        /* Disable the old hover effect on the success state */
+        .btn.success:hover::before {
+            opacity: 0;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            display: flex;
+            gap: 50px;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-info h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--light-color);
+        }
+
+        .contact-details {
+            margin-bottom: 30px;
+        }
+
+        .contact-details p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            color: #aaa;
+        }
+
+        .contact-details i {
+            margin-right: 10px;
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--glass-bg);
+            color: var(--primary-color);
+            border-radius: 50%;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .contact-form {
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--light-color);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            font-size: 16px;
+            background: var(--glass-bg);
+            color: var(--text-color);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(0, 230, 204, 0.3);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(5, 5, 5, 0.9);
+            color: #aaa;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo span {
+            color: var(--primary-color);
+            margin-left: 5px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            margin-top: 20px;
+            color: #666;
+        }
+
+        /* Animations */
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-content, .about-content, .contact-content {
+                flex-direction: column;
+            }
+            .hero-text, .about-text, .contact-info, .contact-form {
+                padding-right: 0;
+                margin-bottom: 40px;
+            }
+            .hero-image {
+                order: -1;
+                margin-bottom: 40px;
+            }
+            .profile-image {
+                width: 350px;
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--glass-nav);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: var(--transition);
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .nav-links li {
+                margin: 15px 0;
+            }
+            .hero-text h1 {
+                font-size: 36px;
+            }
+            .section-title {
+                font-size: 30px;
+            }
+            .skill-circle {
+                width: 120px;
+                height: 120px;
+            }
+            .inner-circle {
+                width: 80px;
+                height: 80px;
+                font-size: 18px;
+            }
+            .liquid-fill {
+                width: 80px;
+                height: 80px;
+                top: 20px;
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NEW: Background elements are now separate -->
+    <div class="animated-background"></div>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <div id="particles-js"></div>
+
+    <!-- Header and all main content are now separate from the background animation -->
+    <header>
+        <!-- ... Header content ... -->
+    </header>
+    
+    <!-- ... All your <section> and <footer> content goes here ... -->
+     <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <div class="logo-img"><img src ="Uround.png" alt="image"></div>
+                    Swaviman<span>Gharai</span>
+                </a>
+                <div class="menu-toggle" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#skills">Skills & Tools</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>
+                        <div>
+    <span id="waving-hand">👋</span>
+    <span id="greeting-text" class="rgb-text-animation"></span> 
+    <br><span class="name">I am Swaviman Gharai</span>
+    <span class="rgb-text-animation">Computer Science Engineer</span></div>
+</h1>
+                    <p>I'm a B.Tech Computer Science Engineering student passionate about innovation, design, and technology. I enjoy creating solutions that bridge the gap between theoretical knowledge and practical applications.</p>
+                    <a href="#projects" class="btn">View My Work</a>
+                    <a href="swaviman_cv.pdf" class="btn">Download My CV</a>
+                </div>
+                <div class="hero-image">
+                    <div class="profile-image">
+                      <img src ="U.png" alt="image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="section skills" id="skills" align="center">
+        <div class="container">
+            <h2 class="section-title">SKills</h2>
+            <div class="skills-container">
+                <div class="skill">
+                    <div class="skill-circle">
+                        <div class="outer-circle" style="--progress: 85%"><div class="inner-circle">85%</div></div>
+                        <div class="liquid-fill"><div class="liquid-wave"></div></div>
+                    </div>
+                    <h3>Java</h3>
+                </div>
+                <div class="skill">
+                    <div class="skill-circle">
+                        <div class="outer-circle" style="--progress: 78%"><div class="inner-circle">78%</div></div>
+                        <div class="liquid-fill"><div class="liquid-wave1"></div></div>
+                    </div>
+                    <h3>C++</h3>
+                </div>
+                <div class="skill">
+                    <div class="skill-circle">
+                        <div class="outer-circle" style="--progress: 90%"><div class="inner-circle">90%</div></div>
+                        <div class="liquid-fill"><div class="liquid-wave2"></div></div>
+                    </div>
+                    <h3>SQL</h3>
+                </div>
+                <div class="skill">
+                    <div class="skill-circle">
+                        <div class="outer-circle" style="--progress: 75%"><div class="inner-circle">75%</div></div>
+                        <div class="liquid-fill"><div class="liquid-wave3"></div></div>
+                    </div>
+                    <h3>HTML</h3>
+                </div>
+                <div class="skill">
+                    <div class="skill-circle">
+                        <div class="outer-circle" style="--progress: 50%"><div class="inner-circle">50%</div></div>
+                        <div class="liquid-fill"><div class="liquid-wave4"></div></div>
+                    </div>
+                    <h3>Python</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section class="section skills" id="tools" align="center">
+        <div class="container">
+            <h2 class="section-title">Tools</h2>
+            <div class="skills-container">
+                <div class="skill">
+                    <div class="skill-circle">
+                        <div class="outer-circle" style="--progress: 62%"><div class="inner-circle">62%</div></div>
+                        <div class="liquid-fill"><div class="liquid-wave5"></div></div>
+                    </div>
+                    <h3>Git hub</h3>
+                </div>
+                <div class="skill">
+                    <div class="skill-circle">
+                        <div class="outer-circle" style="--progress: 82%"><div class="inner-circle">82%</div></div>
+                        <div class="liquid-fill"><div class="liquid-wave6"></div></div>
+                    </div>
+                    <h3>VS Code</h3>
+                </div>
+                <div class="skill">
+                    <div class="skill-circle">
+                        <div class="outer-circle" style="--progress: 93%"><div class="inner-circle">93%</div></div>
+                        <div class="liquid-fill"><div class="liquid-wave7"></div></div>
+                    </div>
+                    <h3>Dev-c++</h3>
+                </div>
+                <div class="skill">
+                    <div class="skill-circle">
+                        <div class="outer-circle" style="--progress: 89%"><div class="inner-circle">89%</div></div>
+                        <div class="liquid-fill"><div class="liquid-wave8"></div></div>
+                    </div>
+                    <h3>MySQL</h3>
+                </div>
+                <div class="skill">
+                    <div class="skill-circle">
+                        <div class="outer-circle" style="--progress: 69%"><div class="inner-circle">69%</div></div>
+                        <div class="liquid-fill"><div class="liquid-wave9"></div></div>
+                    </div>
+                    <h3>W3Schools</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section projects" id="projects" align="center">
+        <div class="container">
+            <h2 class="section-title">My Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image"><div style="width: 100%; height: 100%; background: linear-gradient(45deg, #2a2a2a, #1a1a1a); display: flex; align-items: center; justify-content: center; color: var(--primary-color);"><i class="fa fa-shopping-cart" style="font-size: 60px;"></i></div></div>
+                    <div class="project-info">
+                        <h3>Design E-commerce startup</h3>
+                        <p>Our e-commerce startup is designed to make online shopping faster, smarter, and more convenient.</p>
+                        <div class="project-tags"><span class="project-tag">Place Order</span><span class="project-tag">Data Storing</span><span class="project-tag">Easy Payment</span></div>
+                        <div>
+                        <a href="E_com.html" class="btn">View Project</a>
+                        <a href="https://github.com/your-username" class="btn">GitHub  
+    <i class="fab fa-github"></i>
+</a>
+                    </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image"><div style="width: 100%; height: 100%; background: linear-gradient(45deg, #2a2a2a, #1a1a1a); display: flex; align-items: center; justify-content: center; color: var(--primary-color);"><i class="fas fa-user-lock" style="font-size: 60px;"></i></div></div>
+                    <div class="project-info">
+                        <h3>Log in Interface Demo</h3>
+                        <p>Developed a user-friendly login interface for a web application using HTML, CSS, and JavaScript.</p>
+                        <div class="project-tags"><span class="project-tag">Log in</span><span class="project-tag">Design</span><span class="project-tag">User Interface </span><span class="project-tag">New User</span><span class="project-tag">Forgot Password</span></div>
+                        <div>
+                        <a href="mb_optics.html" class="btn">View Project</a>
+                        <a href="https://github.com/your-username" class="btn">GitHub  
+    <i class="fab fa-github"></i>
+</a>
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image"><div style="width: 100%; height: 100%; background: linear-gradient(45deg, #2a2a2a, #1a1a1a); display: flex; align-items: center; justify-content: center; color: var(--primary-color);"><i class="fas fa-file-invoice-dollar" style="font-size: 60px;"></i></div></div>
+                    <div class="project-info">
+                        <h3>Invoice Generator</h3>
+                        <p>Developed a web-based invoice generator using HTML, CSS, and JavaScript, allowing users to create and manage invoices easily.</p>
+                        <div class="project-tags"><span class="project-tag">Cust. Name</span><span class="project-tag">Advanced</span><span class="project-tag">Invoice Management</span></div>
+                        <div>
+                        <a href="invoice.html" class="btn">View Project</a>
+                            <a href="https://github.com/your-username" class="btn">GitHub  
+                                <i class="fab fa-github"></i>
+                            </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="about" align="center">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-image"><div style="width: 100%; height: 400px; background: linear-gradient(45deg, #2a2a2a, #1a1a1a); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--primary-color);"><i class="fas fa-user" style="font-size: 120px;"></i></div></div>
+                <div class="about-text">
+                    <h3>Computer Science Engineering Student & Innovator</h3>
+                    <p>Hello! I'm Swaviman Gharai, a B.Tech Computer Science Engineering student with a passion for designing innovative solutions to real-world problems. I have a strong foundation in Software principles and enjoy applying them in practical projects.</p>
+                    <p>My expertise includes Website design, Recive Easy Payment, Animation mechanism, and finite element analysis. I'm proficient with tools like SoftdWorks, OOps, html, and Automation.</p>
+                    <p>When I'm not studying or working on projects, I enjoy keeping up with the latest advancements in Computer Science engineering and technology. I believe in continuous learning and pushing the boundaries of what's possible.</p>
+                    <a href="#contact" class="btn">Get In Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact" >
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Let's talk about your project</h3>
+                    <div class="contact-details">
+                        <p><i class="fas fa-envelope"></i> swavimangharai@gmail.com</p>
+                        <p><i class="fas fa-phone"></i> +91 8338812219</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Odisha, India</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/swaviman-gharai-b080002b9"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/n.g.swaviman/?__pwa=1"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form" >
+                    <form id="contactForm" >
+                        <div class="form-group"><label for="name">Your Name</label><input type="text" id="name" required></div>
+                        <div class="form-group"><label for="email">Your Email</label><input type="email" id="email" required></div>
+                        <div class="form-group"><label for="message">Your Message</label><textarea id="message" required></textarea></div>
+                        <button type="submit" class="btn" id="submitBtn">Send Message</button>
+                        <button type="button" onclick="window.location.href='https://docs.google.com/forms/d/e/1FAIpQLSdIC71qFpEFlrBNgOfQVP9WmyDWZgTfB8I7qm-5Oy_fnypdRw/viewform?usp=dialog'" class="btn" id="submitBtn">Direct Contact</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <a href="#" class="footer-logo">
+                    <div class="logo-img"><img src ="Uround.png" alt="image"></div>Swaviman<span>Gharai</span></a>
+                <div class="footer-links">
+                    <a href="#home">Home</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#about">About</a><a href="#contact">Contact</a>
+                </div>
+                <p class="copyright">&copy; 2023 Swaviman Gharai. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // --- UPDATED: Particles.js config for "Plastic Circles" ---
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": ["#00e6cc", "#ff2e63", "#ffffff"] }, // Array of colors
+                "shape": {
+                    "type": "circle",
+                    "stroke": { "width": 1, "color": "#f8f9fa" } // Edge for plastic look
+                },
+                "opacity": {
+                    "value": 0.8, // Solid opacity
+                    "random": true,
+                    "anim": { "enable": false } // No fading in/out
+                },
+                "size": { "value": 5, "random": true },
+                "line_linked": { "enable": false },
+                "move": {
+                    "enable": true,
+                    "speed": 1.5, // Slower, more fluid speed
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                "modes": { "repulse": { "distance": 100, "duration": 0.4 }, "push": { "particles_nb": 4 } }
+            },
+            "retina_detect": true
+        });
+    </script>
+    
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinksContainer = document.getElementById('nav-links'); // Renamed for clarity
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        menuToggle.addEventListener('click', () => {
+            navLinksContainer.classList.toggle('active');
+        });
+        
+        // --- NEW & IMPROVED: Handle navigation clicks for fluid animation and smooth scroll ---
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Prevent the default browser jump
+                e.preventDefault();
+
+                // Remove 'active' from all links
+                navLinks.forEach(l => l.classList.remove('active'));
+
+                // Add 'active' to the clicked link
+                this.classList.add('active');
+
+                // Smoothly scroll to the target section
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                if (navLinksContainer.classList.contains('active')) {
+                    navLinksContainer.classList.remove('active');
+                }
+            });
+        });
+        
+        // Form submission with timed reset
+const contactForm = document.getElementById('contactForm');
+const submitBtn = document.getElementById('submitBtn'); 
+
+contactForm.addEventListener('submit', function(e) {
+    e.preventDefault(); // Stop the form from reloading the page
+
+    // --- Part 1: Show the success message immediately ---
+    submitBtn.classList.add('success');
+    submitBtn.innerText = 'Submit the request contact as soon as possible';
+    submitBtn.disabled = true; // Disable button temporarily
+
+    // --- Part 2: Wait 1.5 seconds, then reset everything ---
+    setTimeout(() => {
+        // This code will run after 1000 milliseconds (1 second)
+
+        // 1. Reset the form fields
+        contactForm.reset();
+
+        // 2. Change the button back to its original state
+        submitBtn.innerText = 'Send Message';
+        submitBtn.classList.remove('success'); // Remove the green color and animation class
+        submitBtn.disabled = false; // Re-enable the button
+
+    }, 1500); // The delay in milliseconds
+});
+
+ window.addEventListener('DOMContentLoaded', () => {
+        const greetingElement = document.getElementById('greeting-text');
+        const currentHour = new Date().getHours();
+        let greeting;
+
+        if (currentHour >= 5 && currentHour < 12) {
+            greeting = 'Good Morning,';
+        } else if (currentHour >= 12 && currentHour < 17) {
+            greeting = 'Good Afternoon,';
+        } else if (currentHour >= 17 && currentHour < 22) {
+            greeting = 'Good Evening,';
+        } else {
+            greeting = 'Good Night,';
+        }
+
+        greetingElement.innerText = greeting;
+    });
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navLinksContainer.contains(e.target) && !menuToggle.contains(e.target)) {
+                navLinksContainer.classList.remove('active');
+            }
+});
+        // Active navigation link based on scroll position (Scroll-spy)
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            let current = 'home';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 150) { // Adjusted offset for better accuracy
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

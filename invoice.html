@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice Generator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: lightgray;
+      backdrop-filter: blur(12px);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0px 8px 25px rgba(2, 0, 0, 0.4);
+    }
+    h2 {
+      text-align: center;
+      color: #0056b3;
+      margin-bottom: 15px;
+    }
+    .shop-info {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: #333;
+    }
+    label {
+      font-weight: bold;
+      margin: 10px 0 5px;
+      display: block;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      font-size: 15px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+
+    /* Animated border */
+    .invoice {
+      margin-top: 20px;
+      padding: 25px;
+      border: 4px solid transparent;
+      border-radius: 12px;
+      background: #fff;
+      position: relative;
+      animation: borderMove 3s linear infinite;
+      background-clip: padding-box;
+    }
+    @keyframes borderMove {
+      0%   { border-image: linear-gradient(45deg, #007bff, #00c6ff) 1; }
+      50%  { border-image: linear-gradient(135deg, #00c6ff, #007bff) 1; }
+      100% { border-image: linear-gradient(45deg, #007bff, #00c6ff) 1; }
+    }
+
+    .invoice h3 {
+      text-align: center;
+      margin-bottom: 5px;
+      color: #007bff;
+    }
+    .invoice p {
+      margin: 6px 0;
+      font-size: 15px;
+    }
+    .invoice-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+    hr {
+      margin: 15px 0;
+      border: 1px solid #ddd;
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+    .signature {
+      text-align: right;
+    }
+    .signature img {
+      max-width: 160px;
+      margin-top: -5px;
+    }
+    .center {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    /* Print only invoice */
+    @media print {
+      body * { visibility: hidden; }
+      #invoiceBox, #invoiceBox * { visibility: visible; }
+      #invoiceBox {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 90%;
+        margin: 0;
+        padding: 30px;
+      }
+    }
+
+     .portfolio-btn {
+            position: fixed; /* Keeps the button in place while scrolling */
+            bottom: 30px;    /* 30px from the bottom */
+            right: 30px;     /* 30px from the right */
+            z-index: 1001;   /* Ensures it's above other content */
+            
+            background: linear-gradient(45deg, #ca8e63, #72bbc5); /* Rich green color */
+            color: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between icon and text */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            
+            /* Apply the RGB lightning animation */
+            animation: rgb-lightning 4s linear infinite;
+        }
+
+        .portfolio-btn:hover {
+            transform: scale(1.05); /* Slightly enlarges on hover */
+        }
+
+        /* 2. Keyframes for the RGB lightning animation */
+        @keyframes rgb-lightning {
+            0% {
+                box-shadow: 0 0 5px #ff2e63, 0 0 10px #ff2e63;
+            }
+            25% {
+                box-shadow: 0 0 5px #33A1FF, 0 0 10px #33A1FF;
+            }
+            50% {
+                box-shadow: 0 0 5px #8E44AD, 0 0 10px #8E44AD;
+            }
+            75% {
+                box-shadow: 0 0 5px #00e6cc, 0 0 10px #00e6cc;
+            }
+            100% {
+                box-shadow: 0 0 5px #ff2e63, 0 0 10px #ff2e63;
+            }
+        }
+
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>MB OPTICS & EYE CARE</h2>
+    <div class="shop-info">
+      <p><b>Bhograi R.I.H.S College Road, Baleswar, Odisha, 756035</b></p>
+      <p>Contact: +91 7064990549 / 9938968826</p>
+    </div>
+
+    <!-- Input Form -->
+    <label>Customer Name</label>
+    <input type="text" id="custName" placeholder="Enter Customer Name" required>
+
+    <label>Mobile Number</label>
+    <input type="number" id="mobile" placeholder="Enter Mobile Number" required>
+
+    <label>Total Amount</label>
+    <input type="number" id="total" placeholder="Enter Total Amount" required>
+
+    <label>Advance Paid</label>
+    <input type="number" id="advance" placeholder="Enter Advance Amount" required>
+
+    <button onclick="generateInvoice()">Print Invoice</button>
+	
+    
+  <p>Have Account <a href="existingdata.html">Existing Data</a></p>
+</div>
+    <!-- Invoice Section -->
+    <div class="invoice" id="invoiceBox" style="display:none;">
+      <h3>MB OPTICS & EYE CARE</h3>
+      <p style="text-align:center; font-size:13px; margin-top:-8px;">
+        Bhograi R.I.H.S College Road, Baleswar, Odisha, 756035<br>
+        Ph: +91 7064990549 / 9938968826
+      </p>
+      
+      <div class="invoice-header">
+        
+        <p><b>Date:</b> <span id="outDate"></span></p>
+		<p><b>Invoice No:</b> <span id="outInvoice"></span></p>
+        <p><b>Time:</b> <span id="outTime"></span></p>
+      </div>
+      <hr>
+      <p><b>Customer:</b> <span id="outCust"></span></p>
+      <p><b>Mobile:</b> <span id="outMobile"></span></p>
+      <hr>
+      <p><b>Total Amount:</b> ₹<span id="outTotal"></span></p>
+      <p><b>Advance Paid:</b> ₹<span id="outAdvance"></span></p>
+      <p><b>Due Amount:</b> ₹<span id="outDue"></span></p>
+      <hr>
+      
+      <div class="footer">
+        <div><b>Location:</b><br>Bhograi R.I.H.S College Road<br>Baleswar, Odisha - 756035</div>
+        <div class="signature">
+          <p><b>Authorized Sign</b></p>
+          <!-- Your actual signature image -->
+          <img src="D:/5th Sem Contribution/ALL HTML FILES/Screenshot 2025-08-24 083056.png" alt="Signature">
+        </div>
+      </div>
+      <p class="center">Thank you for choosing MB OPTICS!</p>
+    </div>
+  </div>
+  <a href="index.html" target="_blank" class="portfolio-btn">
+        <i class="fas fa-user-tie"></i> Go to Portfolio
+    </a>
+  <script>
+  let invoiceCount = 5001; // starting invoice number
+
+  // Example existing data (you can add more)
+  
+
+  function searchCustomer() {
+    let query = document.getElementById("searchBox").value.toLowerCase();
+    let results = document.getElementById("searchResults");
+    results.innerHTML = "";
+
+    if (query.trim() === "") return;
+
+    let matches = customers.filter(cust =>
+      cust.name.toLowerCase().includes(query) ||
+      cust.phone.includes(query)
+    );
+
+    if (matches.length === 0) {
+      results.innerHTML = "<li>No match found</li>";
+      return;
+    }
+
+    matches.forEach(cust => {
+      let li = document.createElement("li");
+      li.textContent = `${cust.name} (${cust.phone})`;
+      li.style.cursor = "pointer";
+      li.onclick = () => fillInvoice(cust);
+      results.appendChild(li);
+    });
+  }
+
+  function fillInvoice(cust) {
+    document.getElementById("custName").value = cust.name;
+    document.getElementById("mobile").value = cust.phone;
+    document.getElementById("total").value = cust.total;
+    document.getElementById("advance").value = cust.advance;
+
+    let due = cust.total - cust.advance;
+
+    document.getElementById("outInvoice").innerText = invoiceCount;
+    document.getElementById("outCust").innerText = cust.name;
+    document.getElementById("outMobile").innerText = cust.phone;
+    document.getElementById("outTotal").innerText = cust.total.toFixed(2);
+    document.getElementById("outAdvance").innerText = cust.advance.toFixed(2);
+    document.getElementById("outDue").innerText = due.toFixed(2);
+    document.getElementById("outDate").innerText = new Date().toLocaleDateString();
+    document.getElementById("outTime").innerText = new Date().toLocaleTimeString();
+
+    document.getElementById("invoiceBox").style.display = "block";
+
+    // clear results after selection
+    document.getElementById("searchResults").innerHTML = "";
+    document.getElementById("searchBox").value = "";
+  }
+
+  function generateInvoice() {
+    let cust = document.getElementById("custName").value;
+    let mobile = document.getElementById("mobile").value;
+    let total = parseFloat(document.getElementById("total").value) || 0;
+    let advance = parseFloat(document.getElementById("advance").value) || 0;
+    let due = total - advance;
+
+    let now = new Date();
+    let date = now.toLocaleDateString();
+    let time = now.toLocaleTimeString();
+
+    document.getElementById("outInvoice").innerText = invoiceCount++;
+    document.getElementById("outCust").innerText = cust;
+    document.getElementById("outMobile").innerText = mobile;
+    document.getElementById("outTotal").innerText = total.toFixed(2);
+    document.getElementById("outAdvance").innerText = advance.toFixed(2);
+    document.getElementById("outDue").innerText = due.toFixed(2);
+    document.getElementById("outDate").innerText = date;
+    document.getElementById("outTime").innerText = time;
+
+    document.getElementById("invoiceBox").style.display = "block";
+
+    // Print only invoice
+    setTimeout(() => { window.print(); }, 500);
+  }
+  function saveInvoiceToFile(invoiceData) {
+  let dataStr = JSON.stringify(invoiceData, null, 2);
+  let blob = new Blob([dataStr], { type: "application/json" });
+  let link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "invoices.json";
+  link.click();
+}
+
+</script>
+
+
+</body>
+</html>
